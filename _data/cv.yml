@@ -1,3 +1,12 @@
+# CV data for the /cv/ page, in the key layout al-folio's CV template expects
+# (`cv_format: rendercv` in _pages/cv.md).
+#
+# Note: this is NOT valid input for upstream RenderCV v2.4+, which renamed
+# `label` -> `headline` and `image` -> `photo` and dropped top-level `summary`,
+# and rejects unknown keys. The .github/workflows/render-cv.yml action that used
+# to render a PDF from this file was removed for that reason -- the CV download
+# button points at assets/pdf/Rajas_Biliye.pdf instead. If you ever want that
+# action back, rename those keys and move `summary` into a `Summary:` section.
 cv:
   name: Rajas Biliye
   label: Industrial Engineer — Operations Research & Optimization
