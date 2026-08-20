@@ -1,0 +1,122 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> service system design with congestion | Rajas R. Biliye </title> <meta name="author" content="Rajas R. Biliye"> <meta name="description" content="Two conic formulations benchmarked against a cutting-plane algorithm across 355 instances — a 63× median speedup."> <meta name="keywords" content="industrial engineering, operations research, supply chain, optimization, portfolio"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%93%8A&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://rajas124.github.io/projects/2_service_system_design/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Rajas</span> R. Biliye </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/projects/">projects <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item "> <a class="nav-link" href="/repositories/">repositories </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title">service system design with congestion</h1> <p class="post-description">Two conic formulations benchmarked against a cutting-plane algorithm across 355 instances — a 63× median speedup.</p> </header> <article> <p><strong>Julia · JuMP · Gurobi · Mixed-Integer Second-Order Cone Programming</strong></p> <p>A Julia/JuMP reproduction of Góez &amp; Anjos (2019), benchmarked against Elhedhli’s (2006) exact outer-linear-approximation algorithm across <strong>355 instances</strong>.</p> <h3 id="the-problem">The problem</h3> <p>Design a network of service facilities under stochastic demand and congestion, making three interleaved decisions: <strong>which</strong> facilities to open, <strong>what capacity</strong> to install at each, and <strong>which customers</strong> to assign where — minimising opening cost + delay cost + assignment cost.</p> <p>Each open facility behaves as an M/M/1 queue, so the delay term is a ratio of arrival rate to spare service rate: nonlinear, and undefined for a facility that stays closed. That single quirk is what all three methods exist to handle.</p> <h3 id="the-three-methods">The three methods</h3> <table> <thead> <tr> <th style="text-align: left">Method</th> <th style="text-align: left">Idea</th> </tr> </thead> <tbody> <tr> <td style="text-align: left"> <strong>Algorithm 1</strong> (Elhedhli 2006)</td> <td style="text-align: left">Relax the concave term with tangent cuts, re-solve, add cuts until the bound gap closes — one MILP per iteration</td> </tr> <tr> <td style="text-align: left"> <strong>MISOCO 6</strong> (Góez &amp; Anjos 2019)</td> <td style="text-align: left">Express congestion via traffic intensity and make the capacity constraint conic — one MISOCP, 2m rotated cones</td> </tr> <tr> <td style="text-align: left"> <strong>MISOCO 7</strong> (Góez &amp; Anjos 2019)</td> <td style="text-align: left">Same, but linearise the bilinear term exactly — only m rotated cones, all of dimension 3</td> </tr> </tbody> </table> <h3 id="results">Results</h3> <p>355 instances = 71 Holmberg problems × 5 delay-cost levels. Gurobi, 600 s limit, 1% MIP gap, identical settings throughout.</p> <table> <thead> <tr> <th style="text-align: left"> </th> <th style="text-align: right">Algorithm 1</th> <th style="text-align: right">MISOCO 6</th> <th style="text-align: right">MISOCO 7</th> </tr> </thead> <tbody> <tr> <td style="text-align: left">Mean solve time</td> <td style="text-align: right">140.62 s</td> <td style="text-align: right">3.99 s</td> <td style="text-align: right"><strong>1.79 s</strong></td> </tr> <tr> <td style="text-align: left">Median solve time</td> <td style="text-align: right">34.80 s</td> <td style="text-align: right">1.30 s</td> <td style="text-align: right"><strong>0.60 s</strong></td> </tr> <tr> <td style="text-align: left">Max solve time</td> <td style="text-align: right">1175.90 s</td> <td style="text-align: right">201.40 s</td> <td style="text-align: right"><strong>35.70 s</strong></td> </tr> <tr> <td style="text-align: left">Fastest on</td> <td style="text-align: right">0.0%</td> <td style="text-align: right">11.3%</td> <td style="text-align: right"><strong>88.7%</strong></td> </tr> <tr> <td style="text-align: left">Instances over 600 s</td> <td style="text-align: right">28</td> <td style="text-align: right">0</td> <td style="text-align: right">0</td> </tr> </tbody> </table> <p>Total solver time across the benchmark: <strong>13.9 hours</strong> for the cutting-plane baseline versus <strong>10.6 minutes</strong> for Formulation 7 — a <strong>63× median speedup</strong>. All three agree on the objective within the 1% MIP gap on every instance, so this is a pure speed difference, not an accuracy trade-off.</p> <p><a href="https://github.com/Rajas124/misoco-service-system-design" rel="external nofollow noopener" target="_blank">Code, formulations, and benchmark results on GitHub</a></p> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Rajas R. Biliye. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-projects",
+          title: "projects",
+          description: "Optimization and stochastic modeling projects — code, formulations, and write-ups.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "Education, experience, projects, and skills.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "nav-repositories",
+          title: "repositories",
+          description: "Source code for the projects above, plus everything else I have public.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/repositories/";
+          },
+        },{id: "projects-airline-crew-pairing",
+          title: 'airline crew pairing',
+          description: "Column generation for crew scheduling — solving a set-partitioning problem with billions of columns by never enumerating them.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_airline_crew_pairing/";
+            },},{id: "projects-service-system-design-with-congestion",
+          title: 'service system design with congestion',
+          description: "Two conic formulations benchmarked against a cutting-plane algorithm across 355 instances — a 63× median speedup.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_service_system_design/";
+            },},{id: "projects-retention-aware-delivery-routing",
+          title: 'retention-aware delivery routing',
+          description: "Three approximations of the Bellman recursion for a stochastic routing problem where customers remember how well they were served.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_retention_aware_routing/";
+            },},{id: "projects-multi-commodity-logistics-network",
+          title: 'multi-commodity logistics network',
+          description: "A multi-commodity MIP routing four commodities across a two-stage network — cheapest plan vs. fastest plan, and the five scenarios in between.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_logistics_network/";
+            },},{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%62%69%6C%69%79%65@%77%69%73%63.%65%64%75", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/Rajas124", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/rajas-biliye", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
