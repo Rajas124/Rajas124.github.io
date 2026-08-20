@@ -27,8 +27,10 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I'm a Master's student in Industrial Engineering at the University of Wisconsin–Madison, focused on optimization, stochastic modeling, and supply chain systems. My work spans mixed-integer programming, dynamic programming, and machine learning applied to logistics, manufacturing, and network design.
+I hold a Master's in Industrial Engineering from the University of Wisconsin–Madison, where I focused on optimization, stochastic modeling, and supply chain systems. My work spans mixed-integer programming, dynamic programming, and machine learning applied to logistics, manufacturing, and network design.
 
-Before UW–Madison, I earned a Bachelor's in Mechanical Engineering from NMIMS Mumbai and worked across process improvement and supply chain roles at Larsen & Toubro and Sub Zero, combining Lean Six Sigma methods with data-driven analysis to cut waste and improve throughput.
+Most of what I build ends up being a model that has to make a decision under a constraint someone actually cares about — which crew flies which legs, which facility opens, which customer gets served next. The [projects]({{ '/projects/' | relative_url }}) page has the write-ups, with code and formulations on [GitHub](https://github.com/Rajas124).
 
-I'm currently open to full-time roles in operations research, supply chain, and optimization starting Spring 2026. Feel free to reach out at biliye@wisc.edu.
+Before UW–Madison, I earned a Bachelor's in Mechanical Engineering from NMIMS Mumbai and worked across process improvement and supply chain roles at Larsen & Toubro and Sub-Zero, combining Lean Six Sigma methods with data-driven analysis to cut waste and improve throughput.
+
+I'm currently looking for full-time roles in operations research, supply chain, and optimization. The best way to reach me is [biliye@wisc.edu](mailto:biliye@wisc.edu) — my [CV]({{ '/cv/' | relative_url }}) is here too.

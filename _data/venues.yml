@@ -1,9 +1,5 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
-
-"PhysRev":
-  url: https://journals.aps.org/
-
-"Vision":
-  color: "#009f36"
+# Venue colors and links used on the publications page.
+# Example:
+# "IISE Transactions":
+#   url: https://www.tandfonline.com/journals/uiie21
+#   color: "#00369f"
